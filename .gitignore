@@ -1,0 +1,9 @@
+# Ignore IntelliJ/Eclipse/VSCode settings
+.idea/
+.vscode/
+target/
+*.class
+*.log
+
+# Ignore Node.js dependencies
+client/node_modules
