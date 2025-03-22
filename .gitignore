@@ -7,3 +7,4 @@ target/
 
 # Ignore Node.js dependencies
 client/node_modules
+.qodo

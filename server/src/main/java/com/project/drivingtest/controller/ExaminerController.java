@@ -7,6 +7,7 @@ import com.project.drivingtest.repository.AppointmentRepository;
 import com.project.drivingtest.repository.ExamResultRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,7 +24,7 @@ public class ExaminerController {
 
     @Autowired
     private ExamResultRepository examResultRepository;
-
+    @PreAuthorize("hasAuthority('EXAMINER')")
     @GetMapping("/appointments")
     public List<Appointment> getPendingAppointments() {
         List<Appointment> allAppointments = appointmentRepository.findAll();
@@ -35,7 +36,7 @@ public class ExaminerController {
     }
 
 
-
+    @PreAuthorize("hasAuthority('EXAMINER')")
     @PostMapping("/update-result/{appointmentId}/{passed}")
     public ResponseEntity<String> updateExamResult(
             @PathVariable Long appointmentId,

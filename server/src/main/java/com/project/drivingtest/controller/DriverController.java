@@ -7,6 +7,7 @@ import com.project.drivingtest.repository.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
@@ -31,7 +32,7 @@ public class DriverController {
 
     @Autowired
     private CarDetailsRepository carDetailsRepository;
-
+    @PreAuthorize("hasAuthority('DRIVER')")
     @PostMapping("/book-appointment/{availableId}")
     public ResponseEntity<String> bookAppointment(@PathVariable Long availableId, HttpServletRequest request) {
 
@@ -75,7 +76,7 @@ public class DriverController {
 
         return ResponseEntity.badRequest().body("Invalid user or appointment.");
     }
-
+    @PreAuthorize("hasAuthority('DRIVER')")
     @PostMapping("/add-car-details")
     public ResponseEntity<String> addCarDetails(@RequestBody CarDetails carDetails, HttpServletRequest request) {
         String email = (String) request.getAttribute("username"); // ✅ Extract from JWT
@@ -98,7 +99,7 @@ public class DriverController {
 
         return ResponseEntity.badRequest().body("Invalid user.");
     }
-
+    @PreAuthorize("hasAuthority('DRIVER')")
     @GetMapping("/status")
     public ResponseEntity<?> getDriverStatus(HttpServletRequest request) {
         String email = (String) request.getAttribute("username");
@@ -120,7 +121,7 @@ public class DriverController {
         return ResponseEntity.badRequest().body("User not found");
     }
 
-
+    @PreAuthorize("hasAuthority('DRIVER')")
     @GetMapping("/booked-appointment")
     public ResponseEntity<?> getBookedAppointment(HttpServletRequest request) {
         String email = (String) request.getAttribute("username");
